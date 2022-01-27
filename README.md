@@ -33,5 +33,4 @@ $ npm run test:cov
 
 
 ## License
-Nest is [MIT licensed](LICENSE).
 realized from the course / based on the Nest.js course
