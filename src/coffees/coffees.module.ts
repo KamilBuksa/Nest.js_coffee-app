@@ -1,11 +1,11 @@
-import {Injectable, Module} from '@nestjs/common';
-import {CoffeesController} from "./coffees.controller";
-import {CoffeesService} from "./coffees.service";
-import {Event} from '../events/entities/event.entity';
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {Coffee} from "./entities/coffee.entity";
-import {Flavor} from "./entities/flavor.entity";
-import {COFFEE_BRANDS} from "./coffees.constants";
+import { Module, Scope } from "@nestjs/common";
+import { CoffeesController } from "./coffees.controller";
+import { CoffeesService } from "./coffees.service";
+import { Event } from "../events/entities/event.entity";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Coffee } from "./entities/coffee.entity";
+import { Flavor } from "./entities/flavor.entity";
+import { COFFEE_BRANDS } from "./coffees.constants";
 
 
 @Module({
@@ -13,8 +13,11 @@ import {COFFEE_BRANDS} from "./coffees.constants";
     controllers: [CoffeesController],
     providers: [
         CoffeesService,
-        {provide: COFFEE_BRANDS,
-            useFactory: ()=> ['buddy brew', 'nescafe']}
+        {
+            provide: COFFEE_BRANDS,
+            useFactory: ()=> ['buddy brew', 'nescafe'],
+            // scope: Scope.REQUEST
+        }
     ],
     exports: [CoffeesService]
 })
