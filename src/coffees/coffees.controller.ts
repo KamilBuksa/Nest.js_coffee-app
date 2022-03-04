@@ -16,15 +16,20 @@ import { REQUEST } from "@nestjs/core";
 import { Request } from "express";
 import { Public } from "../common/decorators/public.decorator";
 import { ParseIntPipe } from "../common/pipes/parse-int.pipe";
+import { Protocol } from "../common/decorators/protocol.decorator";
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('coffees')
 @Controller("coffees")
 export class CoffeesController {
   constructor(private readonly coffeesServices: CoffeesService, @Inject(REQUEST) private readonly request: Request) {
   }
 
+  @ApiForbiddenResponse({description:"Forbidden, on path GET"})
   @Public()
   @Get()
-  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(@Protocol('https') protocol:string ,@Query() paginationQuery: PaginationQueryDto) {
+    console.log(protocol);
     return this.coffeesServices.findAll(paginationQuery);
   }
 
